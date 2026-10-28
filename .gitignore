@@ -1,0 +1,8 @@
+node_modules/
+.test-output/
+dist/
+data/
+backups/
+settings.json
+*.log
+.env*

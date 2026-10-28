@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GitHub 本地管理器</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/setup.css"><script src="/app.js" defer></script></head>
+<body>
+<main>
+  <header class="top"><div class="brand-icon" aria-hidden="true">⌘</div><div><p class="eyebrow">LOCAL WORKSPACE</p><h1>GitHub 本地管理器</h1></div><span class="local"><i></i>仅此电脑</span></header>
+  <section class="intro"><h2>你的工具与项目，<br class="narrow">都在这里。</h2><p>查看本地内容、检查更新，把每一次更改留在你的掌控中。</p></section>
+  <section class="overview" aria-label="清单概览"><div><strong id="total">—</strong><span>已发现条目</span></div><div><strong id="project-count">—</strong><span>Git 项目</span></div><div><strong id="tool-count">—</strong><span>外部工具</span></div><div class="overview-note"><span class="shield">◇</span><span>先检查，再确认更新</span></div></section>
+  <div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索名称或路径" aria-label="搜索名称或路径"><kbd>/</kbd></label><button id="settings-button" class="secondary">设置</button><button id="refresh" class="secondary"><span aria-hidden="true">↻</span> 刷新清单</button></div>
+  <nav id="tabs" aria-label="内容分类"></nav>
+  <div class="list-heading"><h3 id="section-title">全部内容</h3><span id="result-count" class="muted"></span></div>
+  <div id="notice" role="status" hidden></div>
+  <section id="items" aria-live="polite"><div class="loading">正在读取本地清单…</div></section>
+  <button id="more" class="secondary more" hidden>加载更多</button>
+  <details class="scope"><summary>查看扫描范围与功能说明</summary><div id="roots"></div><p>DSH 插件、Codex 插件缓存与源码包仅供查看。Codex 缓存记录不代表当前正在运行的版本。Git 检查会获取远端引用，不修改工作区文件。</p></details>
+  <footer><span>GitHub 本地管理器 <span class="version">0.3</span></span><span id="updated">尚未刷新</span></footer>
+</main>
+<dialog id="setup-dialog" aria-labelledby="setup-title"><p class="eyebrow">GET STARTED</p><h2 id="setup-title">选择你的扫描范围</h2><p class="muted">先设置，再扫描。每行填写一个已存在的完整目录；不需要的分类可留空。</p><p id="setup-environment" class="effects"></p><label class="setup-field">Git 项目目录<textarea id="setup-git" rows="3" placeholder="例如 E:\项目"></textarea></label><label class="setup-field">源码包 / 下载目录<textarea id="setup-download" rows="2"></textarea></label><label class="setup-field">npm 工具安装 prefix<textarea id="setup-npm" rows="2"></textarea><small>填写包含 node_modules 的工具安装目录。也会识别 Codex 配置引用的工具。</small></label><details><summary>高级设置</summary><label class="setup-field">Git 可执行文件（留空自动检测）<input id="setup-git-exe" type="text"></label><label class="setup-field">DSH desktop profile 目录<input id="setup-dsh" type="text"></label></details><p id="setup-data" class="muted"></p><p id="setup-status" role="status"></p><div class="dialog-actions"><button id="setup-cancel" class="secondary">取消</button><button id="setup-save" class="primary">保存并开始扫描</button></div></dialog>
+<dialog id="update-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><span class="dialog-icon">↑</span><button id="close-dialog" class="icon-button" aria-label="关闭更新确认">×</button></div><p class="eyebrow">REVIEW UPDATE</p><h2 id="dialog-title">确认这次更新</h2><p class="muted">检查以下内容后，再决定是否继续。</p><dl id="plan-details"></dl><p id="plan-effects" class="effects"></p><label class="acknowledge"><input id="ack" type="checkbox">我已确认目标和版本，允许执行此更新</label><p id="dialog-status" role="status"></p><div class="dialog-actions"><button id="cancel-update" class="secondary">暂不更新</button><button id="confirm-update" class="primary" disabled>确认更新</button></div></dialog>
+</body></html>
+
+

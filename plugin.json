@@ -1,0 +1,8 @@
+{
+  "$schema":"https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name":"github-local-manager",
+  "version":"0.3.0",
+  "description":"Inspect local GitHub tools and projects, review updates, and open a local management panel. Windows and Node.js 20+ required.",
+  "license":"MIT",
+  "extensions":{"com.openai":{"requires_local_executor":true,"interface":{"displayName":"GitHub 本地管理器","shortDescription":"查看本地项目，检查并确认更新","category":"Developer Tools","capabilities":["Interactive"],"defaultPrompt":"列出我的本地 GitHub 工具和项目"}}}
+}
