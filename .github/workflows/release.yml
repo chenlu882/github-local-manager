@@ -1,0 +1,43 @@
+name: release
+on:
+  release:
+    types: [published]
+permissions:
+  contents: write
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - name: Verify version and create clean packages
+        shell: pwsh
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          if ($env:RELEASE_TAG -ne "v$version") { throw 'Release tag must match package version' }
+          ./scripts/pack.ps1
+      - name: Attach packages and SHA256 files
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_ID: ${{ github.event.release.id }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; Accept = 'application/vnd.github+json'; 'X-GitHub-Api-Version' = '2022-11-28' }
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          $output = Join-Path (Split-Path $env:GITHUB_WORKSPACE -Parent) '发布文件'
+          foreach ($suffix in @('windows.zip','source.zip','windows.zip.sha256.txt','source.zip.sha256.txt')) {
+            $name = "github-local-manager-$version-$suffix"
+            $file = Join-Path $output $name
+            if (!(Test-Path -LiteralPath $file -PathType Leaf)) { throw "Missing package: $name" }
+            $uri = "https://uploads.github.com/repos/$env:GITHUB_REPOSITORY/releases/$env:RELEASE_ID/assets?name=$([Uri]::EscapeDataString($name))"
+            Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -ContentType 'application/octet-stream' -InFile $file | Select-Object name,size
+          }
