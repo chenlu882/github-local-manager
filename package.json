@@ -6,7 +6,7 @@
   "description":"Portable local GitHub inventory, reviewed updates and browser panel for Windows",
   "license":"MIT",
   "engines":{"node":">=20"},
-  "scripts":{"build":"node build.mjs","test":"node --test test/*.test.js","start":"node dist/launcher.js"},
+  "scripts":{"build":"node build.mjs","test":"node --test test/mcp.test.js test/panel.test.js test/portable.test.js","start":"node dist/launcher.js"},
   "dependencies":{"@modelcontextprotocol/sdk":"1.32.2","smol-toml":"1.9.1","zod":"4.6.7"},
   "devDependencies":{"esbuild":"0.25.12"}
 }
